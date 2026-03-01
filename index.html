@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosen Lab | Georgetown MedStar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0c1b33;
+    --deep-blue: #1a3a5c;
+    --teal: #1e6b7a;
+    --teal-light: #2d8fa0;
+    --gold: #b8933f;
+    --gold-light: #d4aa58;
+    --cream: #f7f3ee;
+    --warm-white: #faf8f5;
+    --text-dark: #1a1a2e;
+    --text-mid: #3d4a5c;
+    --text-soft: #6b7a8d;
+    --border: #d9d2c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(12, 27, 51, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(184, 147, 63, 0.25);
+    padding: 0 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(247, 243, 238, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(30, 107, 122, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184, 147, 63, 0.08) 0%, transparent 50%);
+  }
+  .hero-diagram {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 50%;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .anatomy-svg {
+    width: 480px; height: 580px;
+    opacity: 0.15;
+    filter: blur(0.3px);
+    animation: float 8s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 10rem 4rem 6rem 6rem;
+    display: flex; flex-direction: column; justify-content: center;
+    grid-column: 1;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.6rem, 4vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-subtitle {
+    font-size: 1.1rem; font-weight: 300;
+    color: rgba(247, 243, 238, 0.55);
+    line-height: 1.7; max-width: 480px; margin-bottom: 3rem;
+  }
+  .hero-meta { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 3rem; }
+  .hero-meta-item {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+    color: rgba(247, 243, 238, 0.45);
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .hero-meta-item span { color: rgba(247, 243, 238, 0.75); font-weight: 400; }
+  .hero-ctas { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 0.85rem 2rem; border: none; cursor: pointer;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: rgba(247, 243, 238, 0.7);
+    padding: 0.85rem 2rem; border: 1px solid rgba(247, 243, 238, 0.25);
+    cursor: pointer; font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* STATS */
+  .stats-strip {
+    background: var(--deep-blue);
+    border-top: 1px solid rgba(184, 147, 63, 0.2);
+    border-bottom: 1px solid rgba(184, 147, 63, 0.2);
+    padding: 2.5rem 6rem;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+  }
+  .stat {
+    text-align: center; padding: 0 1rem;
+    border-right: 1px solid rgba(247, 243, 238, 0.08);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem; font-weight: 600; color: var(--gold-light);
+    line-height: 1; margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(247, 243, 238, 0.4);
+  }
+
+  /* SECTION COMMON */
+  section { padding: 7rem 6rem; }
+  .section-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-tag::after { content: ''; flex: 1; max-width: 3rem; height: 1px; background: var(--teal); }
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.9rem, 2.8vw, 2.6rem); font-weight: 700;
+    color: var(--navy); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.02em;
+  }
+
+  /* ── ABOUT — Fixed Layout ── */
+  #about {
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto auto;
+    gap: 2rem 4rem;
+    align-items: start;
+  }
+
+  /* Left column: photo on top, credentials below */
+  .about-left {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Right column: bio text */
+  .about-text {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding-top: 1rem;
+  }
+
+  .about-portrait {
+    position: relative;
+    display: block;
+    text-decoration: none;
+  }
+
+  .portrait-accent {
+    position: absolute;
+    top: -1rem; left: -1rem;
+    right: 1rem; bottom: -1rem;
+    border: 1px solid rgba(184, 147, 63, 0.3);
+    z-index: 0;
+  }
+
+  .portrait-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(145deg, #1a3a5c 0%, #0c1b33 100%);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .portrait-frame::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(12,27,51,0.6), transparent);
+  }
+  .portrait-initials {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 5rem; font-weight: 700;
+    color: rgba(184, 147, 63, 0.3); letter-spacing: 0.05em;
+    pointer-events: none;
+  }
+  .portrait-frame img.portrait-photo {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .portrait-frame img.portrait-photo + .portrait-initials { display: none; }
+
+  .portrait-badge {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    background: var(--gold); padding: 1rem 1.2rem; z-index: 2;
+  }
+  .portrait-badge-text {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy); line-height: 1.6;
+  }
+
+  /* Credentials below portrait */
+  .credentials {
+    margin-top: 2rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .credential {
+    display: flex; flex-direction: row; gap: 0.8rem; align-items: flex-start;
+    padding: 0.6rem 0.8rem;
+    border-left: 2px solid var(--teal);
+    background: rgba(30, 107, 122, 0.04);
+  }
+  .credential-year {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    color: var(--teal); min-width: 3.2rem; padding-top: 0.1rem;
+  }
+  .credential-text {
+    font-size: 0.82rem; line-height: 1.5; color: var(--text-mid); font-weight: 300;
+  }
+  .credential-text strong {
+    color: var(--text-dark); font-weight: 500; display: block; margin-bottom: 0.1rem;
+  }
+
+  /* Bio text */
+  .about-text .section-title { margin-bottom: 0.4rem; }
+  .about-name-sub {
+    font-family: 'Source Serif 4', serif; font-size: 0.95rem;
+    font-style: italic; color: var(--text-soft); margin-bottom: 2rem;
+  }
+  .about-body {
+    font-size: 1rem; line-height: 1.85; color: var(--text-mid);
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+
+  /* RESEARCH */
+  #research {
+    background: var(--navy); color: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  #research::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(30, 107, 122, 0.15) 0%, transparent 60%);
+  }
+  #research .section-tag { color: var(--gold); }
+  #research .section-tag::after { background: var(--gold); }
+  #research .section-title { color: var(--cream); }
+  .research-intro {
+    font-size: 1.1rem; font-weight: 300;
+    color: rgba(247, 243, 238, 0.6);
+    max-width: 600px; line-height: 1.75; margin-bottom: 4rem;
+  }
+  .research-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(247, 243, 238, 0.06);
+  }
+  .research-card {
+    background: rgba(12, 27, 51, 0.7); padding: 2.5rem;
+    position: relative; overflow: hidden; transition: background 0.3s;
+  }
+  .research-card:hover { background: rgba(30, 107, 122, 0.15); }
+  .research-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .research-card:hover::before { transform: scaleX(1); }
+  .research-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.5rem; font-weight: 700;
+    color: rgba(184, 147, 63, 0.12); line-height: 1; margin-bottom: 1.5rem;
+  }
+  .research-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem; font-weight: 600; color: var(--cream);
+    margin-bottom: 1rem; line-height: 1.35;
+  }
+  .research-card p {
+    font-size: 0.88rem; font-weight: 300;
+    color: rgba(247, 243, 238, 0.5); line-height: 1.75;
+  }
+  .research-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .tag {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(30, 107, 122, 0.5); color: var(--teal-light);
+  }
+
+  /* PUBLICATIONS */
+  #publications { background: var(--cream); }
+  .publications-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3.5rem;
+  }
+  .pub-list { display: flex; flex-direction: column; gap: 1.5px; }
+  .pub-item {
+    background: white; padding: 2rem 2.5rem;
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 1.8rem; align-items: start;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer;
+  }
+  .pub-item:hover {
+    border-left-color: var(--teal);
+    box-shadow: 4px 0 0 0 rgba(30, 107, 122, 0.08), 0 2px 20px rgba(0,0,0,0.06);
+    z-index: 1; position: relative;
+  }
+  .pub-year {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.08em; color: var(--teal);
+    padding-top: 0.2rem; min-width: 3rem;
+  }
+  .pub-title {
+    font-family: 'Source Serif 4', serif; font-size: 0.98rem;
+    font-weight: 400; color: var(--text-dark);
+    line-height: 1.55; margin-bottom: 0.4rem;
+  }
+  .pub-authors { font-size: 0.8rem; color: var(--text-soft); font-weight: 300; font-style: italic; }
+  .pub-journal {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
+    align-self: center; text-align: right; min-width: 8rem;
+  }
+  .pub-title a { color: inherit; text-decoration: none; }
+
+  /* TEAM */
+  #team { background: var(--warm-white); }
+  .team-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; margin-top: 3rem;
+  }
+  .team-card { text-align: center; }
+  .team-card { display:flex; flex-direction:column; align-items:center; }
+  .team-avatar {
+    width: 200px; aspect-ratio: 1/1; flex: 0 0 200px;
+    background: linear-gradient(145deg, var(--deep-blue), var(--navy));
+    margin: 0 0 1.2rem 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    border-radius: 6px;
+  }
+  .team-avatar a { display:block; width:100%; height:100%; }
+  .team-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+  .team-avatar::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(145deg, rgba(30,107,122,0.2), transparent);
+  }
+  .avatar-initials {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem; font-weight: 600;
+    color: rgba(184, 147, 63, 0.5); letter-spacing: 0.05em; z-index: 1;
+  }
+  .team-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.98rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.3rem;
+  }
+  .team-role {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--deep-blue); color: var(--cream);
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 6rem; align-items: start;
+  }
+  #contact .section-title { color: var(--cream); }
+  #contact .section-tag { color: var(--gold); }
+  #contact .section-tag::after { background: var(--gold); }
+  .contact-body {
+    font-size: 1rem; font-weight: 300;
+    color: rgba(247, 243, 238, 0.55); line-height: 1.8; margin-bottom: 2.5rem;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .contact-item-label {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+    min-width: 5rem; padding-top: 0.15rem;
+  }
+  .contact-item-value {
+    font-size: 0.9rem; color: rgba(247, 243, 238, 0.7); font-weight: 300; line-height: 1.6;
+  }
+  .contact-form { padding-top: 1rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group input, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(247, 243, 238, 0.12);
+    padding: 0.9rem 1.1rem; color: var(--cream);
+    font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300;
+    outline: none; transition: border-color 0.2s; resize: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgba(247, 243, 238, 0.25); font-style: italic;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: rgba(184, 147, 63, 0.5); background: rgba(255,255,255,0.09);
+  }
+  .form-group textarea { height: 120px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(184, 147, 63, 0.15);
+    padding: 2rem 6rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-text {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.12em; color: rgba(247, 243, 238, 0.25);
+  }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.12em; color: rgba(247, 243, 238, 0.3);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* Animations */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Georgetown MedStar<br>Endocrine Surgery Lab</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Head &amp; Neck Endocrine Surgery</div>
+    <h1>Advancing the <em>Surgical Science</em> of Thyroid Disease</h1>
+    <p class="hero-subtitle">Combining precision surgical technique with translational research to improve outcomes for patients with thyroid, parathyroid, and endocrine head and neck disorders.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">Division ·&nbsp; <span>Head of Endocrine Surgery</span></div>
+      <div class="hero-meta-item">Institution ·&nbsp; <span>MedStar Georgetown University Hospital, Washington D.C.</span></div>
+      <div class="hero-meta-item">Department ·&nbsp; <span>Surgery — Head, Neck &amp; Endocrine</span></div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#research" class="btn-primary">Our Research</a>
+      <a href="#publications" class="btn-ghost">Publications</a>
+    </div>
+  </div>
+  <div class="hero-diagram">
+    <svg class="anatomy-svg" viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 30 Q80 60 78 120 Q76 180 80 240 Q84 280 90 310 L100 340 L200 340 L210 310 Q216 280 220 240 Q224 180 222 120 Q220 60 210 30 Z" stroke="rgba(247,243,238,0.6)" stroke-width="1.5" fill="none"/>
+      <rect x="133" y="80" width="34" height="220" rx="17" stroke="rgba(247,243,238,0.4)" stroke-width="1.2" fill="none"/>
+      <line x1="133" y1="105" x2="167" y2="105" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="125" x2="167" y2="125" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="145" x2="167" y2="145" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="165" x2="167" y2="165" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="185" x2="167" y2="185" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="205" x2="167" y2="205" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="133" y1="225" x2="167" y2="225" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <path d="M100 130 Q88 140 85 165 Q83 190 90 215 Q98 235 115 240 Q128 243 133 235 L133 118 Q120 115 100 130 Z" stroke="rgba(30,107,122,0.9)" stroke-width="2" fill="rgba(30,107,122,0.15)"/>
+      <path d="M200 130 Q212 140 215 165 Q217 190 210 215 Q202 235 185 240 Q172 243 167 235 L167 118 Q180 115 200 130 Z" stroke="rgba(30,107,122,0.9)" stroke-width="2" fill="rgba(30,107,122,0.15)"/>
+      <path d="M133 185 Q140 188 150 188 Q160 188 167 185 L167 205 Q160 208 150 208 Q140 208 133 205 Z" stroke="rgba(30,107,122,0.9)" stroke-width="1.5" fill="rgba(30,107,122,0.2)"/>
+      <circle cx="112" cy="148" r="6" stroke="rgba(184,147,63,0.8)" stroke-width="1.5" fill="rgba(184,147,63,0.15)"/>
+      <circle cx="112" cy="220" r="6" stroke="rgba(184,147,63,0.8)" stroke-width="1.5" fill="rgba(184,147,63,0.15)"/>
+      <circle cx="188" cy="148" r="6" stroke="rgba(184,147,63,0.8)" stroke-width="1.5" fill="rgba(184,147,63,0.15)"/>
+      <circle cx="188" cy="220" r="6" stroke="rgba(184,147,63,0.8)" stroke-width="1.5" fill="rgba(184,147,63,0.15)"/>
+      <path d="M124 235 Q120 260 122 290" stroke="rgba(247,200,100,0.4)" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+      <path d="M176 235 Q180 260 178 290" stroke="rgba(247,200,100,0.4)" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+      <text x="55" y="185" font-family="monospace" font-size="8" fill="rgba(247,243,238,0.35)" letter-spacing="1">LEFT</text>
+      <text x="220" y="185" font-family="monospace" font-size="8" fill="rgba(247,243,238,0.35)" letter-spacing="1">RIGHT</text>
+      <text x="200" y="155" font-family="monospace" font-size="7" fill="rgba(184,147,63,0.5)" letter-spacing="0.5">PTG</text>
+      <path d="M125 78 Q125 65 150 58 Q175 65 175 78" stroke="rgba(247,243,238,0.3)" stroke-width="1.5" fill="none"/>
+      <line x1="133" y1="78" x2="133" y2="90" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+      <line x1="167" y1="78" x2="167" y2="90" stroke="rgba(247,243,238,0.2)" stroke-width="1"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat fade-in"><div class="stat-num">500+</div><div class="stat-label">Annual Thyroid &amp; Parathyroid Surgeries</div></div>
+  <div class="stat fade-in"><div class="stat-num">80+</div><div class="stat-label">Peer-Reviewed Publications</div></div>
+  <div class="stat fade-in"><div class="stat-num">$4.2M</div><div class="stat-label">Active Research Funding</div></div>
+  <div class="stat fade-in"><div class="stat-num">15+</div><div class="stat-label">Years of Clinical Research</div></div>
+</div>
+
+<!-- ABOUT — Fixed two-column layout: [photo+credentials] [bio text] -->
+<section id="about">
+
+  <!-- LEFT COLUMN: portrait + credentials stacked -->
+  <div class="about-left fade-in">
+    <a href="https://medstarhealth-delivery.sitecorecontenthub.cloud/api/public/content/ROSEN_Jennifer_600?v=000a4959" target="_blank" rel="noopener" class="about-portrait">
+      <div class="portrait-accent"></div>
+      <div class="portrait-frame">
+        <img src="https://img.p.mapq.st/?url=https%3A%2F%2Fimages.data-axle.com%2F7c157482c5d708f8253ad328bf59fd3f0e509887_l.jpg&w=3840&q=75" alt="Dr. Rosen" class="portrait-photo">
+        <div class="portrait-initials">JR</div>
+      </div>
+      <div class="portrait-badge">
+        <div class="portrait-badge-text">
+          Head of Endocrine Surgery<br>
+          MedStar Georgetown<br>
+          University Hospital
+        </div>
+      </div>
+    </a>
+
+    <!-- Credentials directly below photo -->
+    <div class="credentials">
+      <div class="credential">
+        <div class="credential-year">Pres.</div>
+        <div class="credential-text"><strong>Chief, Division of Endocrine Surgery</strong>MedStar Georgetown University Hospital, Washington D.C.</div>
+      </div>
+      <div class="credential">
+        <div class="credential-year">2010</div>
+        <div class="credential-text"><strong>Fellowship, Surgical Oncology</strong>National Cancer Institute (NCI)</div>
+      </div>
+      <div class="credential">
+        <div class="credential-year">2009</div>
+        <div class="credential-text"><strong>Residency, General Surgery</strong>Beth Israel Medical Center</div>
+      </div>
+      <div class="credential">
+        <div class="credential-year">MD</div>
+        <div class="credential-text"><strong>Thomas Jefferson University Medical College</strong></div>
+      </div>
+      <div class="credential">
+        <div class="credential-year">BA</div>
+        <div class="credential-text"><strong>University of Pennsylvania</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: bio text -->
+  <div class="about-text fade-in">
+    <div class="section-tag">Principal Investigator</div>
+    <h2 class="section-title">Dr. Jennifer Rosen<br>MD, FACS</h2>
+    <div class="about-name-sub">Professor of Surgery · Georgetown University School of Medicine</div>
+
+    <p class="about-body">Jennifer Rosen, MD, FACS is Chief of Endocrine Surgery and Vice Chair for Research of the Department of Surgery at MedStar Washington Hospital Center. She serves on the Collaborative Endocrine Surgery Quality Improvement Program Committee of the American Association of Endocrine Surgeons (AAES) and sits as a representative of the College to the Commission on Cancer (COC), a program of the American College of Surgeons (ACS).</p>
+
+    <p class="about-body">She has been active on numerous committees of the American Thyroid Association (ATA) and serves as Endocrine Section Editor for the Journal of Surgical Oncology. For more than five years, Dr. Rosen served as The Laszlo N. Tauber Assistant Professor of Surgery and Molecular Medicine at the Boston University School of Medicine.</p>
+
+    <p class="about-body">Dr. Rosen specializes in the surgical treatment of diseases of the endocrine glands, including the thyroid, parathyroid and adrenal. She works closely with endocrinologists, nuclear medicine physicians and radiologists to determine proper testing and the best treatment options for each patient.</p>
+
+    <p class="about-body">Her clinical interests include treating patients with complex, advanced or recurrent endocrine disease. Her research interests include bringing in new technology for diagnosing thyroid nodules, discriminating cancerous from benign nodules, improving genetic studies to predict thyroid cancer, and assembling large national databases to study survival in patients with thyroid cancer. Dr. Rosen has previously patented tools now in use at MedStar Washington Hospital Center.</p>
+
+    <p class="about-body">Dr. Rosen's practice utilizes laparoscopic approaches to adrenal procedures and minimally invasive thyroid and parathyroid surgery techniques. She also uses nerve monitoring, intraoperative parathyroid hormone measurements, intraoperative ultrasound, and 4D-CT scan for localization of abnormal parathyroid glands.</p>
+
+    <p class="about-body">Her translational research program bridges the operating room and the bench, investigating molecular drivers of thyroid carcinogenesis, optimizing intraoperative neuromonitoring, and developing predictive models for surgical risk stratification. She is a principal investigator on multiple NIH-funded trials and serves on the editorial boards of leading endocrine surgery journals.</p>
+
+    <p class="about-body" style="font-style:italic; color: var(--text-soft); border-left: 2px solid var(--gold); padding-left: 1.2rem; margin-top: 1.5rem;">"Every patient has their own story and their own history. We do our best to take care of each patient as a unique individual by tailoring their care to them. My goal is for my patients to feel very comfortable asking me questions."</p>
+  </div>
+
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-tag">Science</div>
+  <h2 class="section-title">Research Focus Areas</h2>
+  <p class="research-intro">Our lab pursues fundamental and translational questions at the intersection of oncology, surgical technique, and endocrine physiology—with a unifying goal of improving patient outcomes.</p>
+  <div class="research-grid">
+    <div class="research-card fade-in">
+      <div class="research-number">01</div>
+      <h3>Thyroid Cancer Molecular Mechanisms</h3>
+      <p>Investigating BRAF, RAS, and RET oncogenic drivers in differentiated thyroid carcinoma to inform surgical decision-making and adjuvant therapy selection.</p>
+      <div class="research-tags"><span class="tag">Genomics</span><span class="tag">PTC</span><span class="tag">BRAF V600E</span></div>
+    </div>
+    <div class="research-card fade-in">
+      <div class="research-number">02</div>
+      <h3>Intraoperative Neuromonitoring</h3>
+      <p>Developing real-time continuous neural monitoring protocols to prevent recurrent laryngeal nerve injury during thyroid and parathyroid surgery.</p>
+      <div class="research-tags"><span class="tag">RLN</span><span class="tag">CIONM</span><span class="tag">Nerve Mapping</span></div>
+    </div>
+    <div class="research-card fade-in">
+      <div class="research-number">03</div>
+      <h3>Minimally Invasive Approaches</h3>
+      <p>Evaluating remote-access endoscopic and robotic thyroidectomy techniques for clinical equivalence, cosmesis, and patient-reported outcomes.</p>
+      <div class="research-tags"><span class="tag">Robotic</span><span class="tag">BABA</span><span class="tag">TOETVA</span></div>
+    </div>
+    <div class="research-card fade-in">
+      <div class="research-number">04</div>
+      <h3>Primary Hyperparathyroidism</h3>
+      <p>Outcomes research in parathyroidectomy for sporadic and MEN-associated disease, including focused versus bilateral exploration and long-term biochemical cure rates.</p>
+      <div class="research-tags"><span class="tag">PHPT</span><span class="tag">MEN1</span><span class="tag">Parathyroid</span></div>
+    </div>
+    <div class="research-card fade-in">
+      <div class="research-number">05</div>
+      <h3>Surgical Risk &amp; Outcomes Modeling</h3>
+      <p>Building machine-learning-assisted predictive models for post-thyroidectomy hypocalcemia, hematoma risk, and length of stay using national registry data.</p>
+      <div class="research-tags"><span class="tag">ML</span><span class="tag">NSQIP</span><span class="tag">Prediction</span></div>
+    </div>
+    <div class="research-card fade-in">
+      <div class="research-number">06</div>
+      <h3>Health Disparities in Thyroid Care</h3>
+      <p>Examining racial, socioeconomic, and geographic disparities in access to guideline-concordant thyroid cancer surgery and surveillance across the DMV region.</p>
+      <div class="research-tags"><span class="tag">Equity</span><span class="tag">Access</span><span class="tag">Policy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="publications-header fade-in">
+    <div>
+      <div class="section-tag">Scholarship</div>
+      <h2 class="section-title">Selected Publications</h2>
+    </div>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Rosen+JE&cauthor_id=36410236" class="btn-primary" style="white-space:nowrap">Full Publication List</a>
+  </div>
+  <div class="pub-list">
+    <div class="pub-item fade-in">
+      <div class="pub-year">2025</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/40660811/" target="_blank" rel="noopener">Goal-Oriented Surgical Mentoring Yields Long-Term Benefits for Both Mentor and Mentee</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">Sage Journals</div>
+    </div>
+    <div class="pub-item fade-in">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/39048331/" target="_blank" rel="noopener">Understanding delays to parathyroidectomy: A mixed-methods approach</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">Journal of Surgery</div>
+    </div>
+    <div class="pub-item fade-in">
+      <div class="pub-year">2023</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/38187833/" target="_blank" rel="noopener">Endocrine Patients' Views on Transoral Endoscopic Thyroidectomy via Vestibular Approach (TOETVA)</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">Indian Journal of Surgical Oncology</div>
+    </div>
+    <div class="pub-item fade-in">
+      <div class="pub-year">2023</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/37940438/" target="_blank" rel="noopener">Improved sexual function after parathyroidectomy in women with primary hyperparathyroidism</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">American Journal of Surgery</div>
+    </div>
+    <div class="pub-item fade-in">
+      <div class="pub-year">2022</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/36464545/" target="_blank" rel="noopener">Efficacy of machine learning to identify clinical factors influencing levothyroxine dosage after total thyroidectomy</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">American Journal of Surgery</div>
+    </div>
+    <div class="pub-item fade-in">
+      <div class="pub-year">2022</div>
+      <div>
+        <div class="pub-title"><a href="https://pubmed.ncbi.nlm.nih.gov/36410236/" target="_blank" rel="noopener">Social Determinants of Health and Quality of Life in Endocrine Surgery Patients</a></div>
+        <div class="pub-authors">Rosen E. Jennifer, et al.</div>
+      </div>
+      <div class="pub-journal">Journal of Surgical Research</div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-tag">Laboratory</div>
+  <h2 class="section-title">Lab Members</h2>
+  <div class="team-grid">
+    <div class="team-card fade-in">
+      <div class="team-avatar"><a href="https://medstarhealth-delivery.sitecorecontenthub.cloud/api/public/content/ROSEN_Jennifer_600?v=000a4959" target="_blank" rel="noopener"><img src="https://medstarhealth-delivery.sitecorecontenthub.cloud/api/public/content/ROSEN_Jennifer_600?v=000a4959" alt="Dr. Jennifer Rosen"></a></div>
+      <div class="team-name">Dr. Jennifer Rosen</div>
+      <div class="team-role">Principal Investigator</div>
+    </div>
+    <div class="team-card fade-in">
+      <div class="team-avatar"><a href="https://media.licdn.com/dms/image/v2/C4E22AQE283TBDrXgVQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1668809578329?e=1773878400&v=beta&t=p35Abja_G0KfPjEmvSLUnIfZzwuKVrradqYsmjIT1zk" target="_blank" rel="noopener"><img src="https://media.licdn.com/dms/image/v2/C4E22AQE283TBDrXgVQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1668809578329?e=1773878400&v=beta&t=p35Abja_G0KfPjEmvSLUnIfZzwuKVrradqYsmjIT1zk" alt="Maxwell K. Foote"></a></div>
+      <div class="team-name">Maxwell K. Foote</div>
+      <div class="team-role">Clinical Research Assistant</div>
+    </div>
+    
+    <div class="team-card fade-in" style="opacity:0.5;">
+      <div class="team-avatar" style="border: 2px dashed rgba(30,107,122,0.4); background:transparent;">
+        <div class="avatar-initials" style="font-size:2rem; color:rgba(30,107,122,0.4)">+</div>
+      </div>
+      <div class="team-name" style="color:var(--text-soft)">Join Our Lab</div>
+      <div class="team-role">Positions Open</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <div class="section-tag">Connect</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="contact-body">We welcome inquiries from prospective trainees, collaborators, and referring clinicians. The lab is actively recruiting motivated postdoctoral fellows and clinical research volunteers.</p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-item-label">Location</div>
+        <div class="contact-item-value">Department of Surgery, MedStar Georgetown University Hospital<br>3800 Reservoir Road NW, Washington, D.C. 20007</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value">maxwell.foote@medstar.net
+</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Phone</div>
+        <div class="contact-item-value">(202) 877 — 3158</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Office</div>
+        <div class="contact-item-value">Gorman Building, Suite G-100</div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form fade-in">
+    <div class="form-group"><input id="contact-name" type="text" placeholder="Your name"></div>
+    <div class="form-group"><input id="contact-email" type="email" placeholder="Email address"></div>
+    <div class="form-group"><input id="contact-subject" type="text" placeholder="Subject — e.g. Collaboration inquiry"></div>
+    <div class="form-group"><textarea id="contact-message" placeholder="Your message…"></textarea></div>
+    <button id="contact-send" type="button" class="btn-primary" style="width:100%">Send Message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-text">© 2025 Endocrine Surgery Lab · Georgetown University · MedStar Health</div>
+  <ul class="footer-links">
+    <li><a href="#">MedStar Georgetown</a></li>
+    <li><a href="#">Georgetown Surgery</a></li>
+    <li><a href="#">NCBI Profile</a></li>
+    <li><a href="#">Google Scholar</a></li>
+  </ul>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const siblings = Array.from(entry.target.parentElement.children);
+        entry.target.style.transitionDelay = `${(siblings.indexOf(entry.target) % 4) * 80}ms`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.pub-item').forEach(item => {
+    const url = item.querySelector('.pub-title a')?.href;
+    if (!url) return;
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      window.open(url, '_blank', 'noopener');
+    });
+    item.style.cursor = 'pointer';
+  });
+
+  // Contact form -> open mailto to Maxwell Foote
+  (function(){
+    const send = document.getElementById('contact-send');
+    if (!send) return;
+    send.addEventListener('click', function(){
+      const name = document.getElementById('contact-name')?.value || '';
+      const email = document.getElementById('contact-email')?.value || '';
+      const subject = document.getElementById('contact-subject')?.value || 'Message from site';
+      const message = document.getElementById('contact-message')?.value || '';
+      const to = 'maxwell.foote@medstar.net';
+      const bodyLines = [];
+      if (name) bodyLines.push('Name: ' + name);
+      if (email) bodyLines.push('Email: ' + email);
+      bodyLines.push('');
+      bodyLines.push(message);
+      const body = encodeURIComponent(bodyLines.join('\n'));
+      const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = mailto;
+    });
+  })();
+</script>
+</body>
+</html>
